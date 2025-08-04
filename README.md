@@ -320,10 +320,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Documentation:** [Wiki Link]
-- **Issues:** [GitHub Issues]
-- **Email:** support@integraone.com
-- **Phone:** +1-555-ERP-HELP
+- **Email:** rrwarrior@gmail.com
 
 ---
 
