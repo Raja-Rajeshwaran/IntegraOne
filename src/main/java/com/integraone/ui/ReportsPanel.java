@@ -10,9 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.LocalDate;
 
-/**
- * Reports Management Panel
- */
 @SuppressWarnings("serial")
 public class ReportsPanel extends JPanel {
     private DashboardFrame parentFrame;
@@ -51,7 +48,6 @@ public class ReportsPanel extends JPanel {
         setBackground(UIConstants.CONTENT_COLOR);
         setLayout(new BorderLayout());
         
-        // Date fields
         startDateField = new JTextField(LocalDate.now().minusMonths(1).toString());
         startDateField.setPreferredSize(UIConstants.FIELD_SIZE);
         startDateField.setFont(UIConstants.LABEL_FONT);
@@ -60,7 +56,6 @@ public class ReportsPanel extends JPanel {
         endDateField.setPreferredSize(UIConstants.FIELD_SIZE);
         endDateField.setFont(UIConstants.LABEL_FONT);
         
-        // Table
         String[] columnNames = {"Description", "Value"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -77,7 +72,6 @@ public class ReportsPanel extends JPanel {
         reportTable.getTableHeader().setBackground(UIConstants.BUTTON_COLOR);
         reportTable.getTableHeader().setForeground(Color.WHITE);
         
-        // Summary area
         summaryArea = new JTextArea();
         summaryArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         summaryArea.setEditable(false);
@@ -86,7 +80,6 @@ public class ReportsPanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(UIConstants.CONTENT_COLOR);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.PADDING, UIConstants.MARGIN, 
@@ -106,30 +99,23 @@ public class ReportsPanel extends JPanel {
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(backButton, BorderLayout.EAST);
         
-        // Control Panel
         JPanel controlPanel = createControlPanel();
         
-        // Create tabbed pane for different reports
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(UIConstants.LABEL_FONT);
         
-        // Dashboard Summary Tab
         JPanel summaryPanel = createSummaryPanel();
         tabbedPane.addTab("Dashboard Summary", summaryPanel);
         
-        // Sales Report Tab
         JPanel salesReportPanel = createReportPanel("Sales Report");
         tabbedPane.addTab("Sales Report", salesReportPanel);
         
-        // Purchase Report Tab
         JPanel purchaseReportPanel = createReportPanel("Purchase Report");
         tabbedPane.addTab("Purchase Report", purchaseReportPanel);
         
-        // Inventory Report Tab
         JPanel inventoryReportPanel = createReportPanel("Inventory Report");
         tabbedPane.addTab("Inventory Report", inventoryReportPanel);
         
-        // Customer Report Tab
         JPanel customerReportPanel = createReportPanel("Customer Report");
         tabbedPane.addTab("Customer Report", customerReportPanel);
         
@@ -203,13 +189,10 @@ public class ReportsPanel extends JPanel {
     }
     
     private void setupEventHandlers() {
-        // Generate report button
         findButton("Generate Report").addActionListener(e -> generateSelectedReport());
         
-        // Export PDF button
         findButton("Export PDF").addActionListener(e -> exportToPDF());
         
-        // Refresh button
         findButton("Refresh").addActionListener(e -> generateDashboardSummary());
     }
     
@@ -236,13 +219,11 @@ public class ReportsPanel extends JPanel {
         summary.append("=".repeat(60)).append("\n");
         summary.append("Generated on: ").append(LocalDate.now()).append("\n\n");
         
-        // Customer Statistics
         int totalCustomers = customerDAO.getAllCustomers().size();
         summary.append("CUSTOMER STATISTICS:\n");
         summary.append("-".repeat(30)).append("\n");
         summary.append(String.format("Total Customers: %d\n\n", totalCustomers));
         
-        // Product Statistics
         int totalProducts = productDAO.getAllProducts().size();
         int lowStockProducts = productDAO.getLowStockProducts(10).size();
         summary.append("PRODUCT & INVENTORY STATISTICS:\n");
@@ -250,31 +231,26 @@ public class ReportsPanel extends JPanel {
         summary.append(String.format("Total Products: %d\n", totalProducts));
         summary.append(String.format("Low Stock Products: %d\n\n", lowStockProducts));
         
-        // Sales Statistics
         double totalSales = salesDAO.getTotalSalesAmount();
         summary.append("SALES STATISTICS:\n");
         summary.append("-".repeat(30)).append("\n");
         summary.append(String.format("Total Sales Amount: %s\n\n", ValidationUtil.formatCurrency(totalSales)));
         
-        // Purchase Statistics
         double totalPurchases = purchaseDAO.getTotalPurchaseAmount();
         summary.append("PURCHASE STATISTICS:\n");
         summary.append("-".repeat(30)).append("\n");
         summary.append(String.format("Total Purchase Amount: %s\n\n", ValidationUtil.formatCurrency(totalPurchases)));
         
-        // Order Statistics
         double totalOrders = orderDAO.getTotalOrdersAmount();
         summary.append("ORDER STATISTICS:\n");
         summary.append("-".repeat(30)).append("\n");
         summary.append(String.format("Total Orders Amount: %s\n\n", ValidationUtil.formatCurrency(totalOrders)));
         
-        // Payroll Statistics
         double totalPayroll = payrollDAO.getTotalPayrollAmount();
         summary.append("PAYROLL STATISTICS:\n");
         summary.append("-".repeat(30)).append("\n");
         summary.append(String.format("Total Payroll Amount: %s\n\n", ValidationUtil.formatCurrency(totalPayroll)));
         
-        // Financial Summary
         double grossProfit = totalSales - totalPurchases;
         double netProfit = grossProfit - totalPayroll;
         summary.append("FINANCIAL SUMMARY:\n");
@@ -287,11 +263,10 @@ public class ReportsPanel extends JPanel {
         summary.append("=".repeat(60));
         
         summaryArea.setText(summary.toString());
-        summaryArea.setCaretPosition(0); // Scroll to top
+        summaryArea.setCaretPosition(0); 
     }
     
     private void generateSelectedReport() {
-        // Get the selected tab
         JTabbedPane tabbedPane = (JTabbedPane) ((BorderLayout) getLayout()).getLayoutComponent(BorderLayout.CENTER);
         int selectedTab = tabbedPane.getSelectedIndex();
         String tabTitle = tabbedPane.getTitleAt(selectedTab);
@@ -301,7 +276,6 @@ public class ReportsPanel extends JPanel {
             return;
         }
         
-        // Clear existing data
         tableModel.setRowCount(0);
         
         try {
@@ -329,11 +303,8 @@ public class ReportsPanel extends JPanel {
     }
     
     private void generateSalesReport(LocalDate startDate, LocalDate endDate) {
-        // Update table columns for sales report
         tableModel.setColumnIdentifiers(new String[]{"Product", "Quantity Sold", "Unit Price", "Total Amount", "Sale Date"});
         
-        // In a complete implementation, you would fetch sales data by date range
-        // For now, showing sample data structure
         Object[] sampleRow = {"Sample Product", 10, "$99.99", "$999.90", LocalDate.now().toString()};
         tableModel.addRow(sampleRow);
         
@@ -343,10 +314,8 @@ public class ReportsPanel extends JPanel {
     }
     
     private void generatePurchaseReport(LocalDate startDate, LocalDate endDate) {
-        // Update table columns for purchase report
         tableModel.setColumnIdentifiers(new String[]{"Product", "Quantity Purchased", "Unit Price", "Total Amount", "Purchase Date"});
         
-        // In a complete implementation, you would fetch purchase data by date range
         Object[] sampleRow = {"Sample Product", 20, "$89.99", "$1799.80", LocalDate.now().toString()};
         tableModel.addRow(sampleRow);
         
@@ -356,7 +325,6 @@ public class ReportsPanel extends JPanel {
     }
     
     private void generateInventoryReport() {
-        // Update table columns for inventory report
         tableModel.setColumnIdentifiers(new String[]{"Product", "Current Stock", "Unit Price", "Stock Value", "Status"});
         
         productDAO.getAllProducts().forEach(product -> {
@@ -378,7 +346,6 @@ public class ReportsPanel extends JPanel {
     }
     
     private void generateCustomerReport() {
-        // Update table columns for customer report
         tableModel.setColumnIdentifiers(new String[]{"Customer Name", "Email", "Phone", "Address", "Registration Date"});
         
         customerDAO.getAllCustomers().forEach(customer -> {
@@ -387,7 +354,7 @@ public class ReportsPanel extends JPanel {
                 customer.getEmail(),
                 customer.getPhone(),
                 customer.getAddress(),
-                "N/A" // In a complete implementation, you would have registration date
+                "N/A" 
             };
             tableModel.addRow(row);
         });
@@ -397,7 +364,6 @@ public class ReportsPanel extends JPanel {
     }
     
     private void exportToPDF() {
-        // In a complete implementation, you would use iText library to generate PDF
         JOptionPane.showMessageDialog(this, 
             "PDF export functionality would be implemented here using iText library.\n" +
             "The PDF would include:\n" +

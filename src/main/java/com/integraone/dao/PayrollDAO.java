@@ -8,9 +8,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data Access Object for Payroll operations
- */
 public class PayrollDAO {
     
     public boolean addPayrollRecord(Payroll payroll) {

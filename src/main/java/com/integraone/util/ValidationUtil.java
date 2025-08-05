@@ -2,9 +2,6 @@ package com.integraone.util;
 
 import java.util.regex.Pattern;
 
-/**
- * Utility class for input validation
- */
 public class ValidationUtil {
     private static final Pattern EMAIL_PATTERN = 
         Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");

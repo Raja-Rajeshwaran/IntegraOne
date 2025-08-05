@@ -11,9 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-/**
- * Product Management Panel
- */
 @SuppressWarnings("serial")
 public class ProductPanel extends JPanel {
     private DashboardFrame parentFrame;
@@ -43,7 +40,6 @@ public class ProductPanel extends JPanel {
         setBackground(UIConstants.CONTENT_COLOR);
         setLayout(new BorderLayout());
         
-        // Form fields
         nameField = new JTextField();
         nameField.setPreferredSize(UIConstants.FIELD_SIZE);
         nameField.setFont(UIConstants.LABEL_FONT);
@@ -61,7 +57,6 @@ public class ProductPanel extends JPanel {
         stockField.setPreferredSize(UIConstants.FIELD_SIZE);
         stockField.setFont(UIConstants.LABEL_FONT);
         
-        // Table
         String[] columnNames = {"S.No", "Name", "Description", "Price", "Stock"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -80,7 +75,6 @@ public class ProductPanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(UIConstants.CONTENT_COLOR);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.PADDING, UIConstants.MARGIN, 
@@ -100,13 +94,10 @@ public class ProductPanel extends JPanel {
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(backButton, BorderLayout.EAST);
         
-        // Form Panel
         JPanel formPanel = createFormPanel();
         
-        // Table Panel
         JPanel tablePanel = createTablePanel();
         
-        // Main content panel
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(UIConstants.CONTENT_COLOR);
         contentPanel.add(formPanel, BorderLayout.NORTH);
@@ -125,31 +116,26 @@ public class ProductPanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Name
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Name:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
         formPanel.add(nameField, gbc);
         
-        // Price
         gbc.gridx = 2; gbc.gridy = 0;
         formPanel.add(new JLabel("Price ($):"), gbc);
         gbc.gridx = 3; gbc.gridy = 0;
         formPanel.add(priceField, gbc);
         
-        // Stock
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Stock:"), gbc);
         gbc.gridx = 1; gbc.gridy = 1;
         formPanel.add(stockField, gbc);
         
-        // Description
         gbc.gridx = 2; gbc.gridy = 1;
         formPanel.add(new JLabel("Description:"), gbc);
         gbc.gridx = 3; gbc.gridy = 1;
         formPanel.add(new JScrollPane(descriptionArea), gbc);
         
-        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(UIConstants.CONTENT_COLOR);
         
@@ -159,7 +145,6 @@ public class ProductPanel extends JPanel {
         JButton clearButton = createButton("Clear", UIConstants.BUTTON_COLOR);
         JButton refreshButton = createButton("Refresh", UIConstants.BUTTON_COLOR);
         
-        // Disable update/delete for non-admin users
         if (currentUser.getRole() != User.UserRole.ADMIN) {
             updateButton.setEnabled(false);
             deleteButton.setEnabled(false);
@@ -202,22 +187,16 @@ public class ProductPanel extends JPanel {
     }
     
     private void setupEventHandlers() {
-        // Add button
         findButton("Add").addActionListener(e -> addProduct());
         
-        // Update button
         findButton("Update").addActionListener(e -> updateProduct());
         
-        // Delete button
         findButton("Delete").addActionListener(e -> deleteProduct());
         
-        // Clear button
         findButton("Clear").addActionListener(e -> clearForm());
         
-        // Refresh button
         findButton("Refresh").addActionListener(e -> loadProducts());
         
-        // Table selection
         productTable.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 loadSelectedProduct();
@@ -334,12 +313,9 @@ public class ProductPanel extends JPanel {
             };
             tableModel.addRow(row);
             
-            // Highlight low stock items
             if (product.getStock() <= 10) {
                 @SuppressWarnings("unused")
 				int rowIndex = tableModel.getRowCount() - 1;
-                // Note: In a real implementation, you would use a custom table cell renderer
-                // to highlight the row with a different background color
             }
         }
     }
@@ -354,12 +330,10 @@ public class ProductPanel extends JPanel {
             
             nameField.setText(name);
             descriptionArea.setText(description);
-            // Remove currency formatting for editing
             priceStr = priceStr.replace("$", "");
             priceField.setText(priceStr);
             stockField.setText(stock.toString());
             
-            // Find the product object
             List<Product> products = productDAO.getAllProducts();
             for (Product product : products) {
                 if (product.getName().equals(name)) {

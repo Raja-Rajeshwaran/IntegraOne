@@ -9,9 +9,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data Access Object for Order operations
- */
 public class OrderDAO {
     
     public boolean createOrderWithItems(Order order, List<OrderItem> orderItems) {

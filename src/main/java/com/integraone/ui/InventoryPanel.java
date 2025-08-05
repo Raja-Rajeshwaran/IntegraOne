@@ -5,16 +5,12 @@ import com.integraone.model.Product;
 import com.integraone.model.User;
 import com.integraone.util.UIConstants;
 import com.integraone.util.ValidationUtil;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-/**
- * Inventory Management Panel
- */
 @SuppressWarnings("serial")
 public class InventoryPanel extends JPanel {
     private DashboardFrame parentFrame;
@@ -45,7 +41,6 @@ public class InventoryPanel extends JPanel {
         setBackground(UIConstants.CONTENT_COLOR);
         setLayout(new BorderLayout());
         
-        // Summary labels
         totalProductsLabel = new JLabel("Total Products: 0");
         totalProductsLabel.setFont(UIConstants.LABEL_FONT);
         totalProductsLabel.setForeground(UIConstants.TEXT_COLOR);
@@ -62,7 +57,6 @@ public class InventoryPanel extends JPanel {
         lowStockThresholdField.setPreferredSize(new Dimension(80, 25));
         lowStockThresholdField.setFont(UIConstants.LABEL_FONT);
         
-        // Table
         String[] columnNames = {"S.No", "Product Name", "Description", "Price", "Current Stock", "Stock Value", "Status"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -79,7 +73,6 @@ public class InventoryPanel extends JPanel {
         inventoryTable.getTableHeader().setBackground(UIConstants.BUTTON_COLOR);
         inventoryTable.getTableHeader().setForeground(Color.WHITE);
         
-        // Custom cell renderer for highlighting low stock
         inventoryTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, 
@@ -102,7 +95,6 @@ public class InventoryPanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(UIConstants.CONTENT_COLOR);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.PADDING, UIConstants.MARGIN, 
@@ -122,16 +114,9 @@ public class InventoryPanel extends JPanel {
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(backButton, BorderLayout.EAST);
         
-        // Summary Panel
         JPanel summaryPanel = createSummaryPanel();
-        
-        // Control Panel
         JPanel controlPanel = createControlPanel();
-        
-        // Table Panel
         JPanel tablePanel = createTablePanel();
-        
-        // Main content panel
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(UIConstants.CONTENT_COLOR);
         
@@ -151,8 +136,6 @@ public class InventoryPanel extends JPanel {
         JPanel summaryPanel = new JPanel(new GridLayout(1, 3, 20, 0));
         summaryPanel.setBackground(UIConstants.CONTENT_COLOR);
         summaryPanel.setBorder(BorderFactory.createTitledBorder("Inventory Summary"));
-        
-        // Create summary cards
         JPanel totalProductsCard = createSummaryCard(totalProductsLabel, UIConstants.BUTTON_COLOR);
         JPanel lowStockCard = createSummaryCard(lowStockCountLabel, UIConstants.ERROR_COLOR);
         JPanel totalValueCard = createSummaryCard(totalValueLabel, UIConstants.SUCCESS_COLOR);
@@ -218,20 +201,15 @@ public class InventoryPanel extends JPanel {
     }
     
     private void setupEventHandlers() {
-        // Apply threshold button
         findButton("Apply").addActionListener(e -> {
             loadInventory();
             updateSummary();
         });
-        
-        // Refresh button
-        findButton("Refresh").addActionListener(e -> {
+            findButton("Refresh").addActionListener(e -> {
             loadInventory();
             updateSummary();
         });
-        
-        // Low stock report button
-        findButton("Low Stock Report").addActionListener(e -> showLowStockReport());
+            findButton("Low Stock Report").addActionListener(e -> showLowStockReport());
     }
     
     private JButton findButton(String text) {

@@ -2,9 +2,6 @@ package com.integraone.model;
 
 import java.time.LocalDateTime;
 
-/**
- * Product model class
- */
 public class Product {
     private int id;
     private String name;
@@ -14,7 +11,6 @@ public class Product {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
-    // Constructors
     public Product() {}
     
     public Product(String name, String description, double price, int stock) {
@@ -24,7 +20,6 @@ public class Product {
         this.stock = stock;
     }
     
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     
@@ -48,6 +43,6 @@ public class Product {
     
     @Override
     public String toString() {
-        return name; // For combo box display
+        return name; 
     }
 }

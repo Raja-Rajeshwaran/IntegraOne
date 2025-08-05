@@ -3,9 +3,6 @@ package com.integraone.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * Quotation model class
- */
 public class Quotation {
     private int id;
     private int customerId;
@@ -18,7 +15,6 @@ public class Quotation {
         DRAFT, SENT, ACCEPTED, REJECTED
     }
     
-    // Constructors
     public Quotation() {}
     
     public Quotation(int customerId, LocalDate quotationDate, double totalAmount, QuotationStatus status) {
@@ -28,7 +24,6 @@ public class Quotation {
         this.status = status;
     }
     
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     

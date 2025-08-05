@@ -11,9 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-/**
- * Customer Management Panel
- */
 @SuppressWarnings("serial")
 public class CustomerPanel extends JPanel {
     private DashboardFrame parentFrame;
@@ -44,7 +41,6 @@ public class CustomerPanel extends JPanel {
         setBackground(UIConstants.CONTENT_COLOR);
         setLayout(new BorderLayout());
         
-        // Form fields
         nameField = new JTextField();
         nameField.setPreferredSize(UIConstants.FIELD_SIZE);
         nameField.setFont(UIConstants.LABEL_FONT);
@@ -66,7 +62,6 @@ public class CustomerPanel extends JPanel {
         searchField.setPreferredSize(UIConstants.LARGE_FIELD_SIZE);
         searchField.setFont(UIConstants.LABEL_FONT);
         
-        // Table
         String[] columnNames = {"S.No", "Name", "Email", "Phone", "Address"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -85,7 +80,6 @@ public class CustomerPanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(UIConstants.CONTENT_COLOR);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.PADDING, UIConstants.MARGIN, 
@@ -105,16 +99,12 @@ public class CustomerPanel extends JPanel {
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(backButton, BorderLayout.EAST);
         
-        // Form Panel
         JPanel formPanel = createFormPanel();
         
-        // Search Panel
         JPanel searchPanel = createSearchPanel();
         
-        // Table Panel
         JPanel tablePanel = createTablePanel();
         
-        // Main content panel
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(UIConstants.CONTENT_COLOR);
         
@@ -139,31 +129,26 @@ public class CustomerPanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Name
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Name:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
         formPanel.add(nameField, gbc);
         
-        // Email
         gbc.gridx = 2; gbc.gridy = 0;
         formPanel.add(new JLabel("Email:"), gbc);
         gbc.gridx = 3; gbc.gridy = 0;
         formPanel.add(emailField, gbc);
         
-        // Phone
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Phone:"), gbc);
         gbc.gridx = 1; gbc.gridy = 1;
         formPanel.add(phoneField, gbc);
         
-        // Address
         gbc.gridx = 2; gbc.gridy = 1;
         formPanel.add(new JLabel("Address:"), gbc);
         gbc.gridx = 3; gbc.gridy = 1;
         formPanel.add(new JScrollPane(addressArea), gbc);
         
-        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(UIConstants.CONTENT_COLOR);
         
@@ -173,7 +158,6 @@ public class CustomerPanel extends JPanel {
         JButton clearButton = createButton("Clear", UIConstants.BUTTON_COLOR);
         JButton refreshButton = createButton("Refresh", UIConstants.BUTTON_COLOR);
         
-        // Disable update/delete for non-admin users
         if (currentUser.getRole() != User.UserRole.ADMIN) {
             updateButton.setEnabled(false);
             deleteButton.setEnabled(false);
@@ -233,32 +217,19 @@ public class CustomerPanel extends JPanel {
     }
     
     private void setupEventHandlers() {
-        // Add button
-        findButton("Add").addActionListener(e -> addCustomer());
-        
-        // Update button
+        findButton("Add").addActionListener(e -> addCustomer());  
         findButton("Update").addActionListener(e -> updateCustomer());
-        
-        // Delete button
         findButton("Delete").addActionListener(e -> deleteCustomer());
-        
-        // Clear button
         findButton("Clear").addActionListener(e -> clearForm());
-        
-        // Refresh button
         findButton("Refresh").addActionListener(e -> loadCustomers());
-        
-        // Search button
         findButton("Search").addActionListener(e -> searchCustomers());
         
-        // Table selection
         customerTable.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 loadSelectedCustomer();
             }
         });
         
-        // Search field enter key
         searchField.addActionListener(e -> searchCustomers());
     }
     
@@ -409,7 +380,6 @@ public class CustomerPanel extends JPanel {
             phoneField.setText(phone);
             addressArea.setText(address);
             
-            // Find the customer object
             List<Customer> customers = customerDAO.getAllCustomers();
             for (Customer customer : customers) {
                 if (customer.getName().equals(name) && customer.getEmail().equals(email)) {

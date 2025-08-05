@@ -7,9 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data Access Object for Product operations
- */
 public class ProductDAO {
     
     public boolean addProduct(Product product) {

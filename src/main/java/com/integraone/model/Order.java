@@ -3,9 +3,6 @@ package com.integraone.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * Order model class
- */
 public class Order {
     private int id;
     private int customerId;
@@ -18,7 +15,6 @@ public class Order {
         PENDING, COMPLETED, CANCELLED
     }
     
-    // Constructors
     public Order() {}
     
     public Order(int customerId, LocalDate orderDate, double totalAmount, OrderStatus status) {
@@ -28,7 +24,6 @@ public class Order {
         this.status = status;
     }
     
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     

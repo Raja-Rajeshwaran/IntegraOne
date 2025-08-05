@@ -18,9 +18,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Order Processing Panel
- */
 @SuppressWarnings("serial")
 public class OrderPanel extends JPanel {
     private DashboardFrame parentFrame;
@@ -90,7 +87,6 @@ public class OrderPanel extends JPanel {
         totalAmountLabel.setFont(new Font("Arial", Font.BOLD, 16));
         totalAmountLabel.setForeground(UIConstants.SUCCESS_COLOR);
         
-        // Order Items Table
         String[] orderItemColumns = {"Product", "Quantity", "Unit Price", "Subtotal"};
         orderItemsTableModel = new DefaultTableModel(orderItemColumns, 0) {
             @Override
@@ -107,7 +103,6 @@ public class OrderPanel extends JPanel {
         orderItemsTable.getTableHeader().setBackground(UIConstants.BUTTON_COLOR);
         orderItemsTable.getTableHeader().setForeground(Color.WHITE);
         
-        // Orders Table
         String[] orderColumns = {"S.No", "Customer", "Order Date", "Total Amount", "Status"};
         ordersTableModel = new DefaultTableModel(orderColumns, 0) {
             @Override
@@ -126,7 +121,6 @@ public class OrderPanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(UIConstants.CONTENT_COLOR);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.PADDING, UIConstants.MARGIN, 
@@ -146,15 +140,12 @@ public class OrderPanel extends JPanel {
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(backButton, BorderLayout.EAST);
         
-        // Create main content with tabs
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(UIConstants.LABEL_FONT);
         
-        // New Order Tab
         JPanel newOrderPanel = createNewOrderPanel();
         tabbedPane.addTab("New Order", newOrderPanel);
         
-        // Order History Tab
         JPanel orderHistoryPanel = createOrderHistoryPanel();
         tabbedPane.addTab("Order History", orderHistoryPanel);
         
@@ -166,10 +157,8 @@ public class OrderPanel extends JPanel {
         JPanel newOrderPanel = new JPanel(new BorderLayout());
         newOrderPanel.setBackground(UIConstants.CONTENT_COLOR);
         
-        // Order Info Panel
         JPanel orderInfoPanel = createOrderInfoPanel();
         
-        // Order Items Panel
         JPanel orderItemsPanel = createOrderItemsPanel();
         
         newOrderPanel.add(orderInfoPanel, BorderLayout.NORTH);
@@ -187,19 +176,16 @@ public class OrderPanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Customer
         gbc.gridx = 0; gbc.gridy = 0;
         orderInfoPanel.add(new JLabel("Customer:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
         orderInfoPanel.add(customerComboBox, gbc);
         
-        // Order Date
         gbc.gridx = 2; gbc.gridy = 0;
         orderInfoPanel.add(new JLabel("Order Date:"), gbc);
         gbc.gridx = 3; gbc.gridy = 0;
         orderInfoPanel.add(orderDateField, gbc);
         
-        // Total Amount
         gbc.gridx = 4; gbc.gridy = 0;
         orderInfoPanel.add(totalAmountLabel, gbc);
         
@@ -211,14 +197,11 @@ public class OrderPanel extends JPanel {
         orderItemsPanel.setBackground(UIConstants.CONTENT_COLOR);
         orderItemsPanel.setBorder(BorderFactory.createTitledBorder("Order Items"));
         
-        // Add Item Panel
         JPanel addItemPanel = createAddItemPanel();
         
-        // Items Table
         JScrollPane itemsScrollPane = new JScrollPane(orderItemsTable);
         itemsScrollPane.setPreferredSize(new Dimension(0, 200));
         
-        // Order Actions Panel
         JPanel orderActionsPanel = createOrderActionsPanel();
         
         orderItemsPanel.add(addItemPanel, BorderLayout.NORTH);
@@ -237,25 +220,21 @@ public class OrderPanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Product
         gbc.gridx = 0; gbc.gridy = 0;
         addItemPanel.add(new JLabel("Product:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
         addItemPanel.add(productComboBox, gbc);
         
-        // Quantity
         gbc.gridx = 2; gbc.gridy = 0;
         addItemPanel.add(new JLabel("Quantity:"), gbc);
         gbc.gridx = 3; gbc.gridy = 0;
         addItemPanel.add(quantityField, gbc);
         
-        // Unit Price
         gbc.gridx = 4; gbc.gridy = 0;
         addItemPanel.add(new JLabel("Unit Price:"), gbc);
         gbc.gridx = 5; gbc.gridy = 0;
         addItemPanel.add(unitPriceField, gbc);
         
-        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(UIConstants.CONTENT_COLOR);
         
@@ -318,7 +297,6 @@ public class OrderPanel extends JPanel {
     }
     
     private void setupEventHandlers() {
-        // Product selection - auto-fill price
         productComboBox.addActionListener(e -> {
             Product selectedProduct = (Product) productComboBox.getSelectedItem();
             if (selectedProduct != null) {
@@ -326,23 +304,17 @@ public class OrderPanel extends JPanel {
             }
         });
         
-        // Add item button
-        findButton("Add Item").addActionListener(e -> addItemToOrder());
-        
-        // Remove item button
-        findButton("Remove Item").addActionListener(e -> removeItemFromOrder());
-        
-        // Create order button
-        findButton("Create Order").addActionListener(e -> createOrder());
-        
-        // Clear order button
-        findButton("Clear Order").addActionListener(e -> clearCurrentOrder());
-        
-        // Refresh orders button
-        findButton("Refresh").addActionListener(e -> loadOrders());
-        
-        // View order button
-        findButton("View Details").addActionListener(e -> viewOrderDetails());
+		findButton("Add Item").addActionListener(e -> addItemToOrder());
+
+		findButton("Remove Item").addActionListener(e -> removeItemFromOrder());
+
+		findButton("Create Order").addActionListener(e -> createOrder());
+
+		findButton("Clear Order").addActionListener(e -> clearCurrentOrder());
+
+		findButton("Refresh").addActionListener(e -> loadOrders());
+
+		findButton("View Details").addActionListener(e -> viewOrderDetails());
     }
     
     private JButton findButton(String text) {
@@ -404,7 +376,6 @@ public class OrderPanel extends JPanel {
         double unitPrice = Double.parseDouble(unitPriceField.getText().trim());
         double subtotal = quantity * unitPrice;
         
-        // Check stock availability
         if (selectedProduct.getStock() < quantity) {
             JOptionPane.showMessageDialog(this, 
                 "Insufficient stock! Available: " + selectedProduct.getStock() + " units", 
@@ -412,7 +383,6 @@ public class OrderPanel extends JPanel {
             return;
         }
         
-        // Create order item
         OrderItem orderItem = new OrderItem();
         orderItem.setProductId(selectedProduct.getId());
         orderItem.setQuantity(quantity);
@@ -422,7 +392,6 @@ public class OrderPanel extends JPanel {
         currentOrderItems.add(orderItem);
         currentOrderTotal += subtotal;
         
-        // Add to table
         Object[] row = {
             selectedProduct.getName(),
             quantity,
@@ -431,10 +400,8 @@ public class OrderPanel extends JPanel {
         };
         orderItemsTableModel.addRow(row);
         
-        // Update total
         totalAmountLabel.setText("Total: " + ValidationUtil.formatCurrency(currentOrderTotal));
         
-        // Clear item form
         clearItemForm();
     }
     
@@ -457,14 +424,12 @@ public class OrderPanel extends JPanel {
         Customer selectedCustomer = (Customer) customerComboBox.getSelectedItem();
         LocalDate orderDate = LocalDate.parse(orderDateField.getText().trim());
         
-        // Create order
         Order order = new Order();
         order.setCustomerId(selectedCustomer.getId());
         order.setOrderDate(orderDate);
         order.setTotalAmount(currentOrderTotal);
         order.setStatus(Order.OrderStatus.PENDING);
         
-        // Save order with items
         if (orderDAO.createOrderWithItems(order, currentOrderItems)) {
             JOptionPane.showMessageDialog(this, 
                 "Order created successfully!\nOrder Total: " + ValidationUtil.formatCurrency(currentOrderTotal), 
@@ -497,7 +462,6 @@ public class OrderPanel extends JPanel {
     private void viewOrderDetails() {
         int selectedRow = ordersTable.getSelectedRow();
         if (selectedRow >= 0) {
-            // In a complete implementation, you would show order details in a new dialog
             JOptionPane.showMessageDialog(this, "Order details functionality would be implemented here.", 
                                         "Order Details", JOptionPane.INFORMATION_MESSAGE);
         } else {

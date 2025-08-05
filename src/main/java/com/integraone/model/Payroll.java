@@ -3,9 +3,6 @@ package com.integraone.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * Payroll model class
- */
 public class Payroll {
     private int id;
     private int employeeId;
@@ -16,7 +13,6 @@ public class Payroll {
     private LocalDate payDate;
     private LocalDateTime createdAt;
     
-    // Constructors
     public Payroll() {}
     
     public Payroll(int employeeId, double basicSalary, double allowances, double deductions, double netPay, LocalDate payDate) {
@@ -28,7 +24,6 @@ public class Payroll {
         this.payDate = payDate;
     }
     
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     

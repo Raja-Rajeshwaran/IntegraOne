@@ -2,9 +2,6 @@ package com.integraone.model;
 
 import java.time.LocalDateTime;
 
-/**
- * User model class
- */
 public class User {
     private int id;
     private String username;
@@ -18,7 +15,6 @@ public class User {
         ADMIN, USER
     }
     
-    // Constructors
     public User() {}
     
     public User(String username, String password, String email, UserRole role) {
@@ -28,7 +24,6 @@ public class User {
         this.role = role;
     }
     
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     

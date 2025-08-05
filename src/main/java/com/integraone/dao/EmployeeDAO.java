@@ -7,9 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data Access Object for Employee operations
- */
 public class EmployeeDAO {
     
     public boolean addEmployee(Employee employee) {

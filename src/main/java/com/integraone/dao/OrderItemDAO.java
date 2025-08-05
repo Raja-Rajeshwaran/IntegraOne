@@ -1,4 +1,3 @@
-// src/main/java/com/integraone/dao/OrderItemDAO.java
 package com.integraone.dao;
 
 import com.integraone.model.OrderItem;

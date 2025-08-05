@@ -7,9 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data Access Object for User operations
- */
 public class UserDAO {
     
     public User authenticate(String username, String password) {

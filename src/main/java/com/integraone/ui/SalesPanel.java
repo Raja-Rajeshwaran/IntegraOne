@@ -14,9 +14,6 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Sales Module Panel
- */
 @SuppressWarnings("serial")
 public class SalesPanel extends JPanel {
     private DashboardFrame parentFrame;
@@ -50,7 +47,6 @@ public class SalesPanel extends JPanel {
         setBackground(UIConstants.CONTENT_COLOR);
         setLayout(new BorderLayout());
         
-        // Form fields
         productComboBox = new JComboBox<>();
         productComboBox.setPreferredSize(UIConstants.FIELD_SIZE);
         productComboBox.setFont(UIConstants.LABEL_FONT);
@@ -71,7 +67,6 @@ public class SalesPanel extends JPanel {
         availableStockLabel.setFont(UIConstants.LABEL_FONT);
         availableStockLabel.setForeground(UIConstants.SUCCESS_COLOR);
         
-        // Table
         String[] columnNames = {"S.No", "Product", "Quantity", "Unit Price", "Total", "Sale Date"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -90,7 +85,6 @@ public class SalesPanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(UIConstants.CONTENT_COLOR);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.PADDING, UIConstants.MARGIN, 
@@ -110,13 +104,10 @@ public class SalesPanel extends JPanel {
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(backButton, BorderLayout.EAST);
         
-        // Form Panel
         JPanel formPanel = createFormPanel();
         
-        // Table Panel
         JPanel tablePanel = createTablePanel();
         
-        // Main content panel
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(UIConstants.CONTENT_COLOR);
         contentPanel.add(formPanel, BorderLayout.NORTH);
@@ -135,35 +126,29 @@ public class SalesPanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Product
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Product:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
         formPanel.add(productComboBox, gbc);
         
-        // Available Stock
         gbc.gridx = 2; gbc.gridy = 0;
         formPanel.add(availableStockLabel, gbc);
         
-        // Quantity
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Quantity:"), gbc);
         gbc.gridx = 1; gbc.gridy = 1;
         formPanel.add(quantityField, gbc);
         
-        // Price
         gbc.gridx = 2; gbc.gridy = 1;
         formPanel.add(new JLabel("Unit Price ($):"), gbc);
         gbc.gridx = 3; gbc.gridy = 1;
         formPanel.add(priceField, gbc);
         
-        // Sale Date
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Sale Date:"), gbc);
         gbc.gridx = 1; gbc.gridy = 2;
         formPanel.add(saleDateField, gbc);
         
-        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(UIConstants.CONTENT_COLOR);
         
@@ -206,26 +191,19 @@ public class SalesPanel extends JPanel {
     }
     
     private void setupEventHandlers() {
-        // Record sale button
         findButton("Record Sale").addActionListener(e -> recordSale());
-        
-        // Clear button
         findButton("Clear").addActionListener(e -> clearForm());
-        
-        // Refresh button
         findButton("Refresh").addActionListener(e -> {
             loadProducts();
             loadSales();
         });
         
-        // Product selection - auto-fill price and show stock
         productComboBox.addActionListener(e -> {
             Product selectedProduct = (Product) productComboBox.getSelectedItem();
             if (selectedProduct != null) {
                 priceField.setText(String.valueOf(selectedProduct.getPrice()));
                 availableStockLabel.setText("Available Stock: " + selectedProduct.getStock() + " units");
                 
-                // Change color based on stock level
                 if (selectedProduct.getStock() <= 10) {
                     availableStockLabel.setForeground(UIConstants.ERROR_COLOR);
                 } else {
@@ -287,8 +265,6 @@ public class SalesPanel extends JPanel {
         int quantity = Integer.parseInt(quantityField.getText().trim());
         double price = Double.parseDouble(priceField.getText().trim());
         LocalDate saleDate = LocalDate.parse(saleDateField.getText().trim());
-        
-        // Check if enough stock is available
         if (selectedProduct.getStock() < quantity) {
             JOptionPane.showMessageDialog(this, 
                 "Insufficient stock! Available: " + selectedProduct.getStock() + " units, Requested: " + quantity + " units.", 
@@ -296,16 +272,13 @@ public class SalesPanel extends JPanel {
             return;
         }
         
-        // Create sale record
         Sale sale = new Sale();
         sale.setProductId(selectedProduct.getId());
         sale.setQuantity(quantity);
         sale.setPrice(price);
         sale.setSaleDate(saleDate);
         
-        // Record sale and update stock
         if (salesDAO.addSale(sale)) {
-            // Update product stock
             int newStock = selectedProduct.getStock() - quantity;
             if (productDAO.updateStock(selectedProduct.getId(), newStock)) {
                 JOptionPane.showMessageDialog(this, 
@@ -314,7 +287,7 @@ public class SalesPanel extends JPanel {
                     "Success", JOptionPane.INFORMATION_MESSAGE);
                 
                 clearForm();
-                loadProducts(); // Refresh to show updated stock
+                loadProducts(); 
                 loadSales();
             } else {
                 JOptionPane.showMessageDialog(this, "Sale recorded but failed to update stock.", 

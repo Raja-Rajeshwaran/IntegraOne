@@ -8,9 +8,6 @@ import com.integraone.util.ValidationUtil;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Registration frame for creating new users
- */
 @SuppressWarnings("serial")
 public class RegisterFrame extends JFrame {
     private JTextField usernameField;
@@ -65,7 +62,6 @@ public class RegisterFrame extends JFrame {
         gbc.insets = new Insets(UIConstants.PADDING, UIConstants.PADDING, 
                                UIConstants.PADDING, UIConstants.PADDING);
         
-        // Title
         JLabel titleLabel = new JLabel("Register New User");
         titleLabel.setFont(UIConstants.TITLE_FONT);
         titleLabel.setForeground(UIConstants.TEXT_COLOR);
@@ -75,22 +71,16 @@ public class RegisterFrame extends JFrame {
         
         gbc.gridwidth = 1; gbc.anchor = GridBagConstraints.WEST;
         
-        // Username
         addFormField("Username:", usernameField, gbc, 1);
         
-        // Password
         addFormField("Password:", passwordField, gbc, 2);
         
-        // Confirm Password
         addFormField("Confirm Password:", confirmPasswordField, gbc, 3);
         
-        // Email
         addFormField("Email:", emailField, gbc, 4);
         
-        // Role
         addFormField("Role:", roleComboBox, gbc, 5);
         
-        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(UIConstants.BACKGROUND_COLOR);
         
@@ -115,7 +105,6 @@ public class RegisterFrame extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         add(buttonPanel, gbc);
         
-        // Setup button actions
         registerButton.addActionListener(e -> performRegistration());
         cancelButton.addActionListener(e -> dispose());
     }
@@ -132,7 +121,6 @@ public class RegisterFrame extends JFrame {
     }
     
     private void setupEventHandlers() {
-        // Enter key handling
         confirmPasswordField.addActionListener(e -> performRegistration());
     }
     
@@ -143,7 +131,6 @@ public class RegisterFrame extends JFrame {
         String email = emailField.getText().trim();
         User.UserRole role = (User.UserRole) roleComboBox.getSelectedItem();
         
-        // Validation
         if (!ValidationUtil.isNotEmpty(username)) {
             showError("Username is required.");
             return;
@@ -164,13 +151,11 @@ public class RegisterFrame extends JFrame {
             return;
         }
         
-        // Check if username already exists
         if (userDAO.isUsernameExists(username)) {
             showError("Username already exists. Please choose a different username.");
             return;
         }
         
-        // Create user
         User user = new User(username, password, email, role);
         if (userDAO.createUser(user)) {
             JOptionPane.showMessageDialog(this, 

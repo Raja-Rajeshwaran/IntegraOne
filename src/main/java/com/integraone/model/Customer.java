@@ -2,9 +2,6 @@ package com.integraone.model;
 
 import java.time.LocalDateTime;
 
-/**
- * Customer model class
- */
 public class Customer {
     private int id;
     private String name;
@@ -14,7 +11,6 @@ public class Customer {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
-    // Constructors
     public Customer() {}
     
     public Customer(String name, String email, String phone, String address) {
@@ -24,7 +20,6 @@ public class Customer {
         this.address = address;
     }
     
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     
@@ -48,6 +43,6 @@ public class Customer {
     
     @Override
     public String toString() {
-        return name; // For combo box display
+        return name; 
     }
 }

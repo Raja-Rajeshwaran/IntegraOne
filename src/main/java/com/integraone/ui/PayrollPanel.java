@@ -13,9 +13,6 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Payroll Management Panel
- */
 @SuppressWarnings("serial")
 public class PayrollPanel extends JPanel {
     private EmployeeDAO employeeDAO;
@@ -45,7 +42,6 @@ public class PayrollPanel extends JPanel {
         setBackground(UIConstants.CONTENT_COLOR);
         setLayout(new BorderLayout());
         
-        // Form fields
         employeeComboBox = new JComboBox<>();
         employeeComboBox.setPreferredSize(UIConstants.FIELD_SIZE);
         employeeComboBox.setFont(UIConstants.LABEL_FONT);
@@ -73,7 +69,6 @@ public class PayrollPanel extends JPanel {
         payDateField.setPreferredSize(UIConstants.FIELD_SIZE);
         payDateField.setFont(UIConstants.LABEL_FONT);
         
-        // Table
         String[] columnNames = {"S.No", "Employee", "Basic Salary", "Allowances", "Deductions", "Net Pay", "Pay Date"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -92,7 +87,6 @@ public class PayrollPanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         headerPanel.setBackground(UIConstants.CONTENT_COLOR);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.PADDING, UIConstants.MARGIN, 
@@ -103,13 +97,10 @@ public class PayrollPanel extends JPanel {
         titleLabel.setForeground(UIConstants.TEXT_COLOR);
         headerPanel.add(titleLabel);
         
-        // Form Panel
         JPanel formPanel = createFormPanel();
         
-        // Table Panel
         JPanel tablePanel = createTablePanel();
         
-        // Main content panel
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(UIConstants.CONTENT_COLOR);
         contentPanel.add(formPanel, BorderLayout.NORTH);
@@ -128,43 +119,36 @@ public class PayrollPanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Employee
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Employee:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
         formPanel.add(employeeComboBox, gbc);
         
-        // Basic Salary
         gbc.gridx = 2; gbc.gridy = 0;
         formPanel.add(new JLabel("Basic Salary:"), gbc);
         gbc.gridx = 3; gbc.gridy = 0;
         formPanel.add(basicSalaryField, gbc);
         
-        // Allowances
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Allowances ($):"), gbc);
         gbc.gridx = 1; gbc.gridy = 1;
         formPanel.add(allowancesField, gbc);
         
-        // Deductions
         gbc.gridx = 2; gbc.gridy = 1;
         formPanel.add(new JLabel("Deductions ($):"), gbc);
         gbc.gridx = 3; gbc.gridy = 1;
         formPanel.add(deductionsField, gbc);
         
-        // Net Pay
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Net Pay:"), gbc);
         gbc.gridx = 1; gbc.gridy = 2;
         formPanel.add(netPayField, gbc);
         
-        // Pay Date
         gbc.gridx = 2; gbc.gridy = 2;
         formPanel.add(new JLabel("Pay Date:"), gbc);
         gbc.gridx = 3; gbc.gridy = 2;
         formPanel.add(payDateField, gbc);
         
-        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(UIConstants.CONTENT_COLOR);
         
@@ -218,22 +202,17 @@ public class PayrollPanel extends JPanel {
             }
         });
         
-        // Calculate button
         findButton("Calculate").addActionListener(e -> calculateNetPay());
         
-        // Process payroll button
         findButton("Process Payroll").addActionListener(e -> processPayroll());
         
-        // Clear button
         findButton("Clear").addActionListener(e -> clearForm());
         
-        // Refresh button
         findButton("Refresh").addActionListener(e -> {
             loadEmployees();
             loadPayrollRecords();
         });
         
-        // Auto-calculate when allowances or deductions change
         allowancesField.addActionListener(e -> calculateNetPay());
         deductionsField.addActionListener(e -> calculateNetPay());
     }

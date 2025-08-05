@@ -4,13 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Database connection utility class
- */
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/integraone_db";
-    private static final String USERNAME = "root"; // Change as needed
-    private static final String PASSWORD = "Rr@8754737944"; // Change as needed
+    private static final String USERNAME = "root"; 
+    private static final String PASSWORD = "Rr@8754737944"; 
     
     static {
         try {

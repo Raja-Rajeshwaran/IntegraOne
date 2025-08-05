@@ -9,18 +9,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data Access Object for Quotation operations
- */
 public class QuotationDAO {
     
     public boolean createQuotationWithItems(Quotation quotation, List<QuotationItem> quotationItems) {
         Connection conn = null;
         try {
             conn = DatabaseConnection.getConnection();
-            conn.setAutoCommit(false); // Start transaction
+            conn.setAutoCommit(false);
             
-            // Insert quotation
             String quotationSql = "INSERT INTO quotations (customer_id, quotation_date, total_amount, status) VALUES (?, ?, ?, ?)";
             PreparedStatement quotationStmt = conn.prepareStatement(quotationSql, Statement.RETURN_GENERATED_KEYS);
             
@@ -35,7 +31,6 @@ public class QuotationDAO {
                 return false;
             }
             
-            // Get generated quotation ID
             ResultSet generatedKeys = quotationStmt.getGeneratedKeys();
             int quotationId = 0;
             if (generatedKeys.next()) {
@@ -66,7 +61,7 @@ public class QuotationDAO {
                 }
             }
             
-            conn.commit(); // Commit transaction
+            conn.commit(); 
             return true;
             
         } catch (SQLException e) {

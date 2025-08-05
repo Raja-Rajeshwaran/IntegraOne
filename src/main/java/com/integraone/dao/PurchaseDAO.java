@@ -22,12 +22,10 @@ public class PurchaseDAO {
 	        stmt.setDouble(3, purchase.getPrice());
 	        stmt.setDate(4, Date.valueOf(purchase.getPurchaseDate()));
 	        
-	        // Handle created_at (set to now if null)
 	        LocalDateTime createdAt = purchase.getCreatedAt() != null 
 	                                  ? purchase.getCreatedAt()
 	                                  : LocalDateTime.now();
 	        stmt.setTimestamp(5, Timestamp.valueOf(createdAt));
-	        
 	        return stmt.executeUpdate() > 0;
 	        
 	    } catch (SQLException e) {
@@ -109,9 +107,6 @@ public class PurchaseDAO {
         purchase.setQuantity(rs.getInt("quantity"));
         purchase.setPrice(rs.getDouble("price"));
         purchase.setPurchaseDate(rs.getDate("purchase_date").toLocalDate());
-
-        // Optional status column
-        
         return purchase;
     }
 }

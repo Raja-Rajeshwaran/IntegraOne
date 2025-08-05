@@ -1,8 +1,5 @@
 package com.integraone.model;
 
-/**
- * OrderItem model class
- */
 public class OrderItem {
     private int id;
     private int orderId;
@@ -11,7 +8,6 @@ public class OrderItem {
     private double unitPrice;
     private double subtotal;
     
-    // Constructors
     public OrderItem() {}
     
     public OrderItem(int orderId, int productId, int quantity, double unitPrice, double subtotal) {
@@ -22,7 +18,6 @@ public class OrderItem {
         this.subtotal = subtotal;
     }
     
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     

@@ -65,7 +65,6 @@ public class QuotationPanel extends JPanel {
         setBackground(UIConstants.CONTENT_COLOR);
         setLayout(new BorderLayout());
         
-        // Form fields
         customerComboBox = new JComboBox<>();
         customerComboBox.setPreferredSize(UIConstants.FIELD_SIZE);
         customerComboBox.setFont(UIConstants.LABEL_FONT);
@@ -90,7 +89,6 @@ public class QuotationPanel extends JPanel {
         totalAmountLabel.setFont(new Font("Arial", Font.BOLD, 16));
         totalAmountLabel.setForeground(UIConstants.SUCCESS_COLOR);
         
-        // Quotation Items Table
         String[] quotationItemColumns = {"Product", "Quantity", "Unit Price", "Subtotal"};
         quotationItemsTableModel = new DefaultTableModel(quotationItemColumns, 0) {
             @Override
@@ -107,7 +105,6 @@ public class QuotationPanel extends JPanel {
         quotationItemsTable.getTableHeader().setBackground(UIConstants.BUTTON_COLOR);
         quotationItemsTable.getTableHeader().setForeground(Color.WHITE);
         
-        // Quotations Table
         String[] quotationColumns = {"S.No", "Customer", "Quotation Date", "Total Amount", "Status"};
         quotationsTableModel = new DefaultTableModel(quotationColumns, 0) {
             @Override
@@ -126,7 +123,6 @@ public class QuotationPanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(UIConstants.CONTENT_COLOR);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.PADDING, UIConstants.MARGIN, 
@@ -146,15 +142,12 @@ public class QuotationPanel extends JPanel {
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(backButton, BorderLayout.EAST);
         
-        // Create main content with tabs
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(UIConstants.LABEL_FONT);
         
-        // New Quotation Tab
         JPanel newQuotationPanel = createNewQuotationPanel();
         tabbedPane.addTab("New Quotation", newQuotationPanel);
         
-        // Quotation History Tab
         JPanel quotationHistoryPanel = createQuotationHistoryPanel();
         tabbedPane.addTab("Quotation History", quotationHistoryPanel);
         
@@ -166,10 +159,8 @@ public class QuotationPanel extends JPanel {
         JPanel newQuotationPanel = new JPanel(new BorderLayout());
         newQuotationPanel.setBackground(UIConstants.CONTENT_COLOR);
         
-        // Quotation Info Panel
         JPanel quotationInfoPanel = createQuotationInfoPanel();
         
-        // Quotation Items Panel
         JPanel quotationItemsPanel = createQuotationItemsPanel();
         
         newQuotationPanel.add(quotationInfoPanel, BorderLayout.NORTH);
@@ -187,19 +178,16 @@ public class QuotationPanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Customer
         gbc.gridx = 0; gbc.gridy = 0;
         quotationInfoPanel.add(new JLabel("Customer:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
         quotationInfoPanel.add(customerComboBox, gbc);
         
-        // Quotation Date
         gbc.gridx = 2; gbc.gridy = 0;
         quotationInfoPanel.add(new JLabel("Quotation Date:"), gbc);
         gbc.gridx = 3; gbc.gridy = 0;
         quotationInfoPanel.add(quotationDateField, gbc);
         
-        // Total Amount
         gbc.gridx = 4; gbc.gridy = 0;
         quotationInfoPanel.add(totalAmountLabel, gbc);
         
@@ -211,14 +199,11 @@ public class QuotationPanel extends JPanel {
         quotationItemsPanel.setBackground(UIConstants.CONTENT_COLOR);
         quotationItemsPanel.setBorder(BorderFactory.createTitledBorder("Quotation Items"));
         
-        // Add Item Panel
         JPanel addItemPanel = createAddItemPanel();
         
-        // Items Table
         JScrollPane itemsScrollPane = new JScrollPane(quotationItemsTable);
         itemsScrollPane.setPreferredSize(new Dimension(0, 200));
         
-        // Quotation Actions Panel
         JPanel quotationActionsPanel = createQuotationActionsPanel();
         
         quotationItemsPanel.add(addItemPanel, BorderLayout.NORTH);
@@ -237,25 +222,21 @@ public class QuotationPanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Product
         gbc.gridx = 0; gbc.gridy = 0;
         addItemPanel.add(new JLabel("Product:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
         addItemPanel.add(productComboBox, gbc);
         
-        // Quantity
         gbc.gridx = 2; gbc.gridy = 0;
         addItemPanel.add(new JLabel("Quantity:"), gbc);
         gbc.gridx = 3; gbc.gridy = 0;
         addItemPanel.add(quantityField, gbc);
         
-        // Unit Price
         gbc.gridx = 4; gbc.gridy = 0;
         addItemPanel.add(new JLabel("Unit Price:"), gbc);
         gbc.gridx = 5; gbc.gridy = 0;
         addItemPanel.add(unitPriceField, gbc);
         
-        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(UIConstants.CONTENT_COLOR);
         
@@ -322,7 +303,6 @@ public class QuotationPanel extends JPanel {
     }
     
     private void setupEventHandlers() {
-        // Product selection - auto-fill price
         productComboBox.addActionListener(e -> {
             Product selectedProduct = (Product) productComboBox.getSelectedItem();
             if (selectedProduct != null) {
@@ -330,28 +310,20 @@ public class QuotationPanel extends JPanel {
             }
         });
         
-        // Add item button
         findButton("Add Item").addActionListener(e -> addItemToQuotation());
         
-        // Remove item button
         findButton("Remove Item").addActionListener(e -> removeItemFromQuotation());
         
-        // Create quotation button
         findButton("Create Quotation").addActionListener(e -> createQuotation());
         
-        // Clear quotation button
         findButton("Clear Quotation").addActionListener(e -> clearCurrentQuotation());
         
-        // Generate PDF button
         findButton("Generate PDF").addActionListener(e -> generatePDF());
         
-        // Refresh quotations button
         findButton("Refresh").addActionListener(e -> loadQuotations());
         
-        // View quotation button
         findButton("View Details").addActionListener(e -> viewQuotationDetails());
         
-        // Convert to invoice button
         findButton("Convert to Invoice").addActionListener(e -> convertToInvoice());
     }
     
@@ -414,7 +386,6 @@ public class QuotationPanel extends JPanel {
         double unitPrice = Double.parseDouble(unitPriceField.getText().trim());
         double subtotal = quantity * unitPrice;
         
-        // Create quotation item
         QuotationItem quotationItem = new QuotationItem();
         quotationItem.setProductId(selectedProduct.getId());
         quotationItem.setQuantity(quantity);
@@ -424,7 +395,6 @@ public class QuotationPanel extends JPanel {
         currentQuotationItems.add(quotationItem);
         currentQuotationTotal += subtotal;
         
-        // Add to table
         Object[] row = {
             selectedProduct.getName(),
             quantity,
@@ -433,10 +403,8 @@ public class QuotationPanel extends JPanel {
         };
         quotationItemsTableModel.addRow(row);
         
-        // Update total
         totalAmountLabel.setText("Total: " + ValidationUtil.formatCurrency(currentQuotationTotal));
         
-        // Clear item form
         clearItemForm();
     }
     
@@ -459,14 +427,12 @@ public class QuotationPanel extends JPanel {
         Customer selectedCustomer = (Customer) customerComboBox.getSelectedItem();
         LocalDate quotationDate = LocalDate.parse(quotationDateField.getText().trim());
         
-        // Create quotation
         Quotation quotation = new Quotation();
         quotation.setCustomerId(selectedCustomer.getId());
         quotation.setQuotationDate(quotationDate);
         quotation.setTotalAmount(currentQuotationTotal);
         quotation.setStatus(Quotation.QuotationStatus.DRAFT);
         
-        // Save quotation with items
         if (quotationDAO.createQuotationWithItems(quotation, currentQuotationItems)) {
             JOptionPane.showMessageDialog(this, 
                 "Quotation created successfully!\nQuotation Total: " + ValidationUtil.formatCurrency(currentQuotationTotal), 
@@ -503,7 +469,6 @@ public class QuotationPanel extends JPanel {
             return;
         }
         
-        // In a complete implementation, you would use iText library to generate PDF
         JOptionPane.showMessageDialog(this, 
             "PDF generation functionality would be implemented here using iText library.\n" +
             "The PDF would include company details, customer information, and itemized quotation.", 

@@ -8,9 +8,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data Access Object for Sales operations
- */
 public class SalesDAO {
     
     public boolean addSale(Sale sale) {

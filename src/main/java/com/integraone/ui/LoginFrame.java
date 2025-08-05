@@ -10,9 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Login frame for user authentication
- */
 @SuppressWarnings("serial")
 public class LoginFrame extends JFrame {
     private JTextField usernameField;
@@ -50,15 +47,12 @@ public class LoginFrame extends JFrame {
         gbc.insets = new Insets(UIConstants.PADDING, UIConstants.PADDING, 
                                UIConstants.PADDING, UIConstants.PADDING);
         
-        // Title
         JLabel titleLabel = new JLabel("IntegraOne ERP System");
         titleLabel.setFont(UIConstants.TITLE_FONT);
         titleLabel.setForeground(UIConstants.TEXT_COLOR);
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(titleLabel, gbc);
-        
-        // Username
         gbc.gridwidth = 1; gbc.anchor = GridBagConstraints.WEST;
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setFont(UIConstants.LABEL_FONT);
@@ -68,8 +62,6 @@ public class LoginFrame extends JFrame {
         
         gbc.gridx = 1; gbc.gridy = 1;
         add(usernameField, gbc);
-        
-        // Password
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(UIConstants.LABEL_FONT);
         passwordLabel.setForeground(UIConstants.TEXT_COLOR);
@@ -78,8 +70,6 @@ public class LoginFrame extends JFrame {
         
         gbc.gridx = 1; gbc.gridy = 2;
         add(passwordField, gbc);
-        
-        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(UIConstants.BACKGROUND_COLOR);
         
@@ -103,17 +93,9 @@ public class LoginFrame extends JFrame {
         gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(buttonPanel, gbc);
-        
-        // Default credentials info
-        JLabel infoLabel = new JLabel("<html><center>Default Login:<br>Admin: admin/admin123<br>User: user/user123</center></html>");
-        infoLabel.setFont(new Font("Arial", Font.ITALIC, 10));
-        infoLabel.setForeground(UIConstants.TEXT_COLOR);
-        gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 2;
-        add(infoLabel, gbc);
     }
     
     private void setupEventHandlers() {
-        // Login button action
         getRootPane().getDefaultButton();
         JButton loginButton = findButton("Login");
         if (loginButton != null) {
@@ -125,7 +107,6 @@ public class LoginFrame extends JFrame {
             });
         }
         
-        // Register button action
         JButton registerButton = findButton("Register");
         if (registerButton != null) {
             registerButton.addActionListener(new ActionListener() {
@@ -136,7 +117,6 @@ public class LoginFrame extends JFrame {
             });
         }
         
-        // Enter key for login
         passwordField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -180,7 +160,6 @@ public class LoginFrame extends JFrame {
                 "Login Successful", 
                 JOptionPane.INFORMATION_MESSAGE);
             
-            // Open dashboard
             SwingUtilities.invokeLater(() -> {
                 new DashboardFrame(user).setVisible(true);
                 dispose();

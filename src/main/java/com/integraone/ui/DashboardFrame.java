@@ -8,9 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Main dashboard frame - central navigation hub
- */
 @SuppressWarnings("serial")
 public class DashboardFrame extends JFrame {
     private User currentUser;
@@ -41,18 +38,11 @@ public class DashboardFrame extends JFrame {
     private void setupLayout() {
         setLayout(new BorderLayout());
         
-        // Header Panel
         JPanel headerPanel = createHeaderPanel();
         add(headerPanel, BorderLayout.NORTH);
-        
-        // Navigation Panel
         JPanel navPanel = createNavigationPanel();
         add(navPanel, BorderLayout.WEST);
-        
-        // Content Panel
         add(contentPanel, BorderLayout.CENTER);
-        
-        // Show welcome panel initially
         showWelcomePanel();
     }
     
@@ -66,9 +56,6 @@ public class DashboardFrame extends JFrame {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
         
-//        JLabel userLabel = new JLabel("  Welcome, " + currentUser.getUsername() + " (" + currentUser.getRole() + ")");
-//        userLabel.setFont(UIConstants.LABEL_FONT);
-//        userLabel.setForeground(Color.WHITE);
         
         JButton logoutButton = new JButton("Logout");
         logoutButton.setFont(UIConstants.BUTTON_FONT);
@@ -78,7 +65,6 @@ public class DashboardFrame extends JFrame {
         logoutButton.addActionListener(e -> logout());
         
         headerPanel.add(titleLabel, BorderLayout.WEST);
-        //headerPanel.add(userLabel, BorderLayout.CENTER);
         headerPanel.add(logoutButton, BorderLayout.EAST);
         
         return headerPanel;
@@ -91,8 +77,6 @@ public class DashboardFrame extends JFrame {
         navPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.MARGIN, UIConstants.PADDING, 
                                                            UIConstants.MARGIN, UIConstants.PADDING));
         navPanel.setPreferredSize(new Dimension(200, 0));
-        
-        // Navigation buttons
         String[] modules = {
             "Dashboard", "Customer Management", "Product Management", 
             "Inventory Management", "Purchase Module", "Sales Module",
@@ -105,7 +89,6 @@ public class DashboardFrame extends JFrame {
             navPanel.add(Box.createVerticalStrut(5));
         }
         
-        // Add flexible space
         navPanel.add(Box.createVerticalGlue());
         
         return navPanel;
@@ -132,7 +115,6 @@ public class DashboardFrame extends JFrame {
     }
     
     private void navigateToModule(String moduleName) {
-        // Remove existing panel if it exists
         Component[] components = contentPanel.getComponents();
         for (Component comp : components) {
             if (comp.getName() != null && comp.getName().equals(moduleName)) {
@@ -184,7 +166,6 @@ public class DashboardFrame extends JFrame {
     }
     
     private void showWelcomePanel() {
-        // Remove existing welcome panel
         Component[] components = contentPanel.getComponents();
         for (Component comp : components) {
             if (comp.getName() != null && comp.getName().equals("Welcome")) {
@@ -219,7 +200,6 @@ public class DashboardFrame extends JFrame {
     }
     
     private void setupEventHandlers() {
-        // Window closing event
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

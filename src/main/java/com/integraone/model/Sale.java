@@ -3,9 +3,6 @@ package com.integraone.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * Sale model class
- */
 public class Sale {
     private int id;
     private int productId;
@@ -14,7 +11,6 @@ public class Sale {
     private LocalDate saleDate;
     private LocalDateTime createdAt;
     
-    // Constructors
     public Sale() {}
     
     public Sale(int productId, int quantity, double price, LocalDate saleDate) {
@@ -24,7 +20,6 @@ public class Sale {
         this.saleDate = saleDate;
     }
     
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     

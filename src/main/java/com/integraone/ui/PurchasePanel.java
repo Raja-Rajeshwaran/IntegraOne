@@ -14,9 +14,6 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Purchase Module Panel
- */
 @SuppressWarnings("serial")
 public class PurchasePanel extends JPanel {
     private DashboardFrame parentFrame;
@@ -47,7 +44,6 @@ public class PurchasePanel extends JPanel {
         setBackground(UIConstants.CONTENT_COLOR);
         setLayout(new BorderLayout());
         
-        // Form fields
         productComboBox = new JComboBox<>();
         productComboBox.setPreferredSize(UIConstants.FIELD_SIZE);
         productComboBox.setFont(UIConstants.LABEL_FONT);
@@ -64,7 +60,6 @@ public class PurchasePanel extends JPanel {
         purchaseDateField.setPreferredSize(UIConstants.FIELD_SIZE);
         purchaseDateField.setFont(UIConstants.LABEL_FONT);
         
-        // Table
         String[] columnNames = {"S.No", "Product", "Quantity", "Price", "Total", "Purchase Date"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -83,7 +78,6 @@ public class PurchasePanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(UIConstants.CONTENT_COLOR);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.PADDING, UIConstants.MARGIN, 
@@ -103,13 +97,10 @@ public class PurchasePanel extends JPanel {
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(backButton, BorderLayout.EAST);
         
-        // Form Panel
         JPanel formPanel = createFormPanel();
         
-        // Table Panel
         JPanel tablePanel = createTablePanel();
         
-        // Main content panel
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(UIConstants.CONTENT_COLOR);
         contentPanel.add(formPanel, BorderLayout.NORTH);
@@ -128,31 +119,26 @@ public class PurchasePanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Product
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Product:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
         formPanel.add(productComboBox, gbc);
         
-        // Quantity
         gbc.gridx = 2; gbc.gridy = 0;
         formPanel.add(new JLabel("Quantity:"), gbc);
         gbc.gridx = 3; gbc.gridy = 0;
         formPanel.add(quantityField, gbc);
         
-        // Price
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Unit Price ($):"), gbc);
         gbc.gridx = 1; gbc.gridy = 1;
         formPanel.add(priceField, gbc);
         
-        // Purchase Date
         gbc.gridx = 2; gbc.gridy = 1;
         formPanel.add(new JLabel("Purchase Date:"), gbc);
         gbc.gridx = 3; gbc.gridy = 1;
         formPanel.add(purchaseDateField, gbc);
         
-        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(UIConstants.CONTENT_COLOR);
         
@@ -195,19 +181,15 @@ public class PurchasePanel extends JPanel {
     }
     
     private void setupEventHandlers() {
-        // Add purchase button
         findButton("Add Purchase").addActionListener(e -> addPurchase());
         
-        // Clear button
         findButton("Clear").addActionListener(e -> clearForm());
         
-        // Refresh button
         findButton("Refresh").addActionListener(e -> {
             loadProducts();
             loadPurchases();
         });
         
-        // Product selection - auto-fill price
         productComboBox.addActionListener(e -> {
             Product selectedProduct = (Product) productComboBox.getSelectedItem();
             if (selectedProduct != null) {
@@ -269,7 +251,6 @@ public class PurchasePanel extends JPanel {
         double price = Double.parseDouble(priceField.getText().trim());
         LocalDate purchaseDate = LocalDate.parse(purchaseDateField.getText().trim());
 
-        // Create purchase object
         Purchase purchase = new Purchase();
         purchase.setProductId(selectedProduct.getId());
         purchase.setQuantity(quantity);
@@ -288,8 +269,8 @@ public class PurchasePanel extends JPanel {
                     "Success", JOptionPane.INFORMATION_MESSAGE);
 
             clearForm();
-            loadProducts();   // Refresh stock
-            loadPurchases();  // Refresh table
+            loadProducts();  
+            loadPurchases();  
         } else {
             JOptionPane.showMessageDialog(this,
                     "Failed to record purchase.",

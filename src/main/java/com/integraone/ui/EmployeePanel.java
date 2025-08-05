@@ -11,9 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-/**
- * Employee/HR Management Panel
- */
 @SuppressWarnings("serial")
 public class EmployeePanel extends JPanel {
     private DashboardFrame parentFrame;
@@ -44,7 +41,6 @@ public class EmployeePanel extends JPanel {
         setBackground(UIConstants.CONTENT_COLOR);
         setLayout(new BorderLayout());
         
-        // Form fields
         nameField = new JTextField();
         nameField.setPreferredSize(UIConstants.FIELD_SIZE);
         nameField.setFont(UIConstants.LABEL_FONT);
@@ -65,7 +61,6 @@ public class EmployeePanel extends JPanel {
         basicSalaryField.setPreferredSize(UIConstants.FIELD_SIZE);
         basicSalaryField.setFont(UIConstants.LABEL_FONT);
         
-        // Table
         String[] columnNames = {"S.No", "Name", "Email", "Phone", "Role", "Basic Salary"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -84,12 +79,10 @@ public class EmployeePanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(UIConstants.CONTENT_COLOR);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(UIConstants.PADDING, UIConstants.MARGIN, 
                                                               UIConstants.PADDING, UIConstants.MARGIN));
-        
         JLabel titleLabel = new JLabel("HR/Employee Management");
         titleLabel.setFont(UIConstants.TITLE_FONT);
         titleLabel.setForeground(UIConstants.TEXT_COLOR);
@@ -104,13 +97,10 @@ public class EmployeePanel extends JPanel {
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(backButton, BorderLayout.EAST);
         
-        // Form Panel
         JPanel formPanel = createFormPanel();
         
-        // Table Panel
         JPanel tablePanel = createTablePanel();
         
-        // Main content panel
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(UIConstants.CONTENT_COLOR);
         contentPanel.add(formPanel, BorderLayout.NORTH);
@@ -129,37 +119,31 @@ public class EmployeePanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Name
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Name:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
         formPanel.add(nameField, gbc);
         
-        // Email
         gbc.gridx = 2; gbc.gridy = 0;
         formPanel.add(new JLabel("Email:"), gbc);
         gbc.gridx = 3; gbc.gridy = 0;
         formPanel.add(emailField, gbc);
         
-        // Phone
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Phone:"), gbc);
         gbc.gridx = 1; gbc.gridy = 1;
         formPanel.add(phoneField, gbc);
         
-        // Role
         gbc.gridx = 2; gbc.gridy = 1;
         formPanel.add(new JLabel("Role:"), gbc);
         gbc.gridx = 3; gbc.gridy = 1;
         formPanel.add(roleField, gbc);
         
-        // Basic Salary
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Basic Salary ($):"), gbc);
         gbc.gridx = 1; gbc.gridy = 2;
         formPanel.add(basicSalaryField, gbc);
         
-        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(UIConstants.CONTENT_COLOR);
         
@@ -170,7 +154,6 @@ public class EmployeePanel extends JPanel {
         JButton refreshButton = createButton("Refresh", UIConstants.BUTTON_COLOR);
         JButton payrollButton = createButton("Payroll", UIConstants.BUTTON_COLOR);
         
-        // Disable update/delete for non-admin users
         if (currentUser.getRole() != User.UserRole.ADMIN) {
             updateButton.setEnabled(false);
             deleteButton.setEnabled(false);
@@ -214,25 +197,13 @@ public class EmployeePanel extends JPanel {
     }
     
     private void setupEventHandlers() {
-        // Add button
         findButton("Add Employee").addActionListener(e -> addEmployee());
-        
-        // Update button
-        findButton("Update").addActionListener(e -> updateEmployee());
-        
-        // Delete button
+        findButton("Update").addActionListener(e -> updateEmployee()); 
         findButton("Delete").addActionListener(e -> deleteEmployee());
-        
-        // Clear button
         findButton("Clear").addActionListener(e -> clearForm());
-        
-        // Refresh button
         findButton("Refresh").addActionListener(e -> loadEmployees());
-        
-        // Payroll button
         findButton("Payroll").addActionListener(e -> openPayrollPanel());
         
-        // Table selection
         employeeTable.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 loadSelectedEmployee();
@@ -368,11 +339,8 @@ public class EmployeePanel extends JPanel {
             emailField.setText(email);
             phoneField.setText(phone);
             roleField.setText(role);
-            // Remove currency formatting for editing
             salaryStr = salaryStr.replace("$", "");
             basicSalaryField.setText(salaryStr);
-            
-            // Find the employee object
             List<Employee> employees = employeeDAO.getAllEmployees();
             for (Employee employee : employees) {
                 if (employee.getName().equals(name) && employee.getEmail().equals(email)) {
