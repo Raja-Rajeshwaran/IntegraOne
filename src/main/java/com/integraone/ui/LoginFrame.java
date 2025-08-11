@@ -25,10 +25,12 @@ public class LoginFrame extends JFrame {
     
     private void initializeComponents() {
         setTitle("IntegraOne - Login");
+        ImageIcon icon = new ImageIcon("C:\\Users\\LENOVO\\Downloads\\IntegraOne.png\\");
+        setIconImage(icon.getImage());
         setSize(UIConstants.LOGIN_SIZE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
         
         getContentPane().setBackground(UIConstants.BACKGROUND_COLOR);
         
@@ -92,7 +94,7 @@ public class LoginFrame extends JFrame {
         
         gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
-        add(buttonPanel, gbc);
+        add(buttonPanel, gbc);	
     }
     
     private void setupEventHandlers() {

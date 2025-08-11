@@ -15,6 +15,8 @@ public class DashboardFrame extends JFrame {
     private CardLayout cardLayout;
     
     public DashboardFrame(User user) {
+    	ImageIcon icon = new ImageIcon("C:\\Users\\LENOVO\\Downloads\\IntegraOne.png");
+    	setIconImage(icon.getImage());
         this.currentUser = user;
         initializeComponents();
         setupLayout();
@@ -22,7 +24,7 @@ public class DashboardFrame extends JFrame {
     }
     
     private void initializeComponents() {
-        setTitle("IntegraOne - Dashboard (" + currentUser.getUsername() + " - " + currentUser.getRole() + ")");
+        setTitle("IntegraOne - Dashboard");
         setSize(UIConstants.DASHBOARD_SIZE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

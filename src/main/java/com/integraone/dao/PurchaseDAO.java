@@ -59,25 +59,27 @@ public class PurchaseDAO {
 
     public List<Purchase> getPurchasesByDateRange(LocalDate startDate, LocalDate endDate) {
         List<Purchase> purchases = new ArrayList<>();
-        String sql = "SELECT * FROM purchases WHERE purchase_date BETWEEN ? AND ? ORDER BY purchase_date DESC";
-
+        String sql = "SELECT * FROM purchases WHERE purchase_date BETWEEN ? AND ?";
+        
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setDate(1, Date.valueOf(startDate));
-            stmt.setDate(2, Date.valueOf(endDate));
-
+            
+            stmt.setDate(1, java.sql.Date.valueOf(startDate));
+            stmt.setDate(2, java.sql.Date.valueOf(endDate));
+            
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Purchase purchase = mapResultSetToPurchase(rs);
+                Purchase purchase = new Purchase();
+                purchase.setId(rs.getInt("id"));
+                purchase.setProductId(rs.getInt("product_id"));
+                purchase.setQuantity(rs.getInt("quantity"));
+                purchase.setPrice(rs.getDouble("price"));
+                purchase.setPurchaseDate(rs.getDate("purchase_date").toLocalDate());
                 purchases.add(purchase);
             }
-
         } catch (SQLException e) {
-            System.err.println("[ERROR] Failed to fetch purchases in date range:");
             e.printStackTrace();
         }
-
         return purchases;
     }
 

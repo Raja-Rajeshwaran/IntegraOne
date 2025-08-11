@@ -124,20 +124,17 @@ public class ProductDAO {
         return products;
     }
     
-    public Product getProductById(int id) {
+    public Product getProductById(int productId) {
         String sql = "SELECT * FROM products WHERE id = ?";
-        
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setInt(1, id);
+            stmt.setInt(1, productId);
             ResultSet rs = stmt.executeQuery();
-            
             if (rs.next()) {
                 Product product = new Product();
                 product.setId(rs.getInt("id"));
                 product.setName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
                 product.setPrice(rs.getDouble("price"));
                 product.setStock(rs.getInt("stock"));
                 return product;

@@ -32,6 +32,9 @@ public class Purchase {
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
     
+    public double getTotalAmount() {
+        return quantity * price;
+    }
     public LocalDate getPurchaseDate() { return purchaseDate; }
     public void setPurchaseDate(LocalDate purchaseDate) { this.purchaseDate = purchaseDate; }
     

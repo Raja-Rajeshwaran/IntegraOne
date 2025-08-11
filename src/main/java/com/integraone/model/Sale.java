@@ -48,4 +48,8 @@ public class Sale {
                 ", saleDate=" + saleDate +
                 '}';
     }
+
+    public double getTotalAmount() {
+        return quantity * price;
+    }
 }

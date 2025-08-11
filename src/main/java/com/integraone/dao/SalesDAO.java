@@ -53,13 +53,13 @@ public class SalesDAO {
     
     public List<Sale> getSalesByDateRange(LocalDate startDate, LocalDate endDate) {
         List<Sale> sales = new ArrayList<>();
-        String sql = "SELECT * FROM sales WHERE sale_date BETWEEN ? AND ? ORDER BY sale_date DESC";
+        String sql = "SELECT * FROM sales WHERE sale_date BETWEEN ? AND ?";
         
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setDate(1, Date.valueOf(startDate));
-            stmt.setDate(2, Date.valueOf(endDate));
+            stmt.setDate(1, java.sql.Date.valueOf(startDate));
+            stmt.setDate(2, java.sql.Date.valueOf(endDate));
             
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

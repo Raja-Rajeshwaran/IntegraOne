@@ -6,21 +6,24 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/integraone_db";
-    private static final String USERNAME = "root"; 
-    private static final String PASSWORD = "Rr@8754737944"; 
-    
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = System.getenv("DB_PASSWORD"); 
+
     static {
         try {
+            if (PASSWORD == null) {
+                throw new RuntimeException("Database password not set! Please set DB_PASSWORD as an environment variable.");
+            }
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("MySQL JDBC Driver not found", e);
         }
     }
-    
+
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
-    
+
     public static boolean testConnection() {
         try (Connection conn = getConnection()) {
             return conn != null && !conn.isClosed();
@@ -29,7 +32,7 @@ public class DatabaseConnection {
             return false;
         }
     }
-    
+
     public static void closeConnection(Connection conn) {
         if (conn != null) {
             try {
