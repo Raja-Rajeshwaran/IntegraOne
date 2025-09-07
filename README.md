@@ -318,10 +318,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Database Administrators:** [Team Members]
 - **QA Engineers:** [Team Members]
 
-## 📞 Support
-
-- **Email:** rrwarrior@gmail.com
-
 ---
 
 **🏢 Transform your business operations with IntegraOne ERP! 🚀**
