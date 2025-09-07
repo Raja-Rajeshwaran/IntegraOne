@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
+
 
 @SuppressWarnings("serial")
 public class ReportsPanel extends JPanel {
@@ -505,7 +505,8 @@ public class ReportsPanel extends JPanel {
         try {
             // Create document with margins
             com.itextpdf.text.Document document = new com.itextpdf.text.Document(com.itextpdf.text.PageSize.A4, 36, 36, 36, 36);
-            com.itextpdf.text.pdf.PdfWriter writer = com.itextpdf.text.pdf.PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
+            @SuppressWarnings("unused")
+			com.itextpdf.text.pdf.PdfWriter writer = com.itextpdf.text.pdf.PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
             document.open();
             
             // Add report header
